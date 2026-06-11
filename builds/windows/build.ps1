@@ -13,8 +13,8 @@ $BUILD_DIR = ".\build"
 Remove-Item -Recurse -Force $BUILD_DIR, $DIST_DIR -ErrorAction SilentlyContinue
 Get-ChildItem -Recurse -Filter "__pycache__" | Remove-Item -Recurse -Force
 
-# Build onefile
-pyinstaller `
+# Build onefile using PyInstaller from the venv
+.venv\Scripts\pyinstaller.exe `
     --name "$APP_NAME" `
     --noconfirm `
     --clean `
