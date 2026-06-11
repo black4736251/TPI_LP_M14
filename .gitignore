@@ -1,0 +1,15 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Build auto-generated files
+builds/linux/Loja_de_Carrinhos.spec
+builds/macos/Loja_de_Carrinhos.spec
+builds/windows/Loja_de_Carrinhos.spec

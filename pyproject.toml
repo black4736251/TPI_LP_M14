@@ -1,0 +1,12 @@
+[project]
+name = "tpi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "platformdirs>=4.10.0",
+    "pyclean>=3.7.0",
+    "pyinstaller>=6.20.0",
+    "pyside6>=6.11.1",
+]
