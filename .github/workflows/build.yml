@@ -61,7 +61,7 @@ jobs:
       - name: Build Windows
         if: runner.os == 'Windows'
         run: |
-          powershell -ExecutionPolicy Bypass -File builds/windows/build.ps1
+          uv run python builds/windows/build.py
 
       # ------------------------------
       # UPLOAD ARTIFACTS
