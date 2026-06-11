@@ -20,9 +20,9 @@ pyinstaller \
     --name "$APP_NAME" \
     --noconfirm \
     --clean \
-    --onefile \
+    --onedir \
     --windowed \
-    --target-arch universal2 \
+    --target-arch arm64 \
     --distpath "$DIST_DIR" \
     --workpath "$BUILD_DIR" \
     --add-data "../../app/resources/images:app/resources/images" \
