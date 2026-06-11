@@ -1,0 +1,104 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ------------------------------
+      # INSTALL UV
+      # ------------------------------
+
+      - name: Install uv (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Install uv (Windows)
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+      # ------------------------------
+      # INSTALL DEPENDENCIES
+      # ------------------------------
+
+      - name: Sync dependencies
+        run: uv sync
+
+      - name: Activate venv (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: source .venv/bin/activate
+
+      - name: Activate venv (Windows)
+        if: runner.os == 'Windows'
+        run: .venv\Scripts\Activate.ps1
+
+      # ------------------------------
+      # BUILD FOR EACH PLATFORM
+      # ------------------------------
+
+      - name: Build Linux
+        if: runner.os == 'Linux'
+        run: |
+          chmod +x builds/linux/build.sh
+          cd builds/linux
+          ./build.sh
+
+      - name: Build macOS
+        if: runner.os == 'macOS'
+        run: |
+          chmod +x builds/macos/build.sh
+          cd builds/macos
+          ./build.sh
+
+      - name: Build Windows
+        if: runner.os == 'Windows'
+        run: |
+          cd builds/windows
+          powershell -ExecutionPolicy Bypass -File build.ps1
+
+      # ------------------------------
+      # UPLOAD ARTIFACTS
+      # ------------------------------
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Loja_de_Carrinhos-${{ matrix.os }}
+          path: |
+            builds/**/dist/**
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
