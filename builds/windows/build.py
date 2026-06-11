@@ -1,19 +1,24 @@
+from pathlib import Path
 import PyInstaller.__main__
 
+ROOT = Path(__file__).resolve().parents[2]
+
+ENTRY = ROOT / "main.py"
+
 PyInstaller.__main__.run([
-    '--name=Loja_de_Carrinhos',
+    f'--name=Loja_de_Carrinhos',
     '--noconfirm',
     '--clean',
     '--onefile',
     '--windowed',
-    '--distpath=dist',
-    '--workpath=build',
-    '--add-data=../../app/resources/images;app/resources/images',
-    '--add-data=../../app/resources/sounds;app/resources/sounds',
-    '--add-data=../../app/views;app/views',
-    '--add-data=../../app/controllers;app/controllers',
-    '--add-data=../../app/services;app/services',
-    '--add-data=../../app/models;app/models',
-    '--add-data=../../app/core;app/core',
-    '../../main.py'
+    f'--distpath={ROOT / "builds/windows/dist"}',
+    f'--workpath={ROOT / "builds/windows/build"}',
+    f'--add-data={ROOT / "app/resources/images"};app/resources/images',
+    f'--add-data={ROOT / "app/resources/sounds"};app/resources/sounds',
+    f'--add-data={ROOT / "app/views"};app/views',
+    f'--add-data={ROOT / "app/controllers"};app/controllers',
+    f'--add-data={ROOT / "app/services"};app/services',
+    f'--add-data={ROOT / "app/models"};app/models',
+    f'--add-data={ROOT / "app/core"};app/core',
+    str(ENTRY)
 ])
