@@ -60,11 +60,13 @@ Voltar à [página principal](https://github.com/black4736251/TPI_LP_M14)
 │       └── ui_helper.py
 ├── builds
 │   ├── linux
-│   │   └── build.sh
+│   │   ├── build.sh
+│   │   └── dist
+│   │       └── Loja_de_Carrinhos
 │   ├── macos
 │   │   └── build.sh
 │   └── windows
-│       └── build.ps1
+│       └── build.py
 ├── main.py
 ├── PROJECT_STRUCTURE.md
 ├── pyproject.toml
