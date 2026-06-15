@@ -1,4 +1,4 @@
-  # Loja de Carrinhos 🏎️
+  # Loja de Carrinhos v2 🏎️
 
   Aplicação desenvolvida em **Python 3.14.5**, com interface gráfica em **PySide6**, compilada com **PyInstaller**, utilizando **SQLite3** para persistência de dados e **PBKDF2** para hashing seguro de passwords.
 
